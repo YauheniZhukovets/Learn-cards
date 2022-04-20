@@ -11,6 +11,7 @@ import SuperRadio from '../../../n1-main/m1-ui/common/c6-SuperRadio/SuperRadio';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import {Loading} from '../../../n1-main/m1-ui/common/c0-Preloder/Loading';
 import s from './Learn.module.css'
+import Tilt from "react-parallax-tilt";
 
 
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
@@ -71,7 +72,7 @@ export const Learn = () => {
         }
     }
 
-    const onClickCanselHandler = () => {
+    const onClickCancelHandler = () => {
         navigate(PATH.PACKS, {replace: true})
     }
 
@@ -81,37 +82,45 @@ export const Learn = () => {
 
 
     return (
-        <>
+        <div >
             <Header/>
-            <div className={s.mainBlock}>
-                <h2>Learn {packName}</h2>
+            <div className={s.mainContainer}>
+                <Tilt>
+                    <div className={s.container_log}>
+                        <h2>Learn {packName}</h2>
+                        <div>
+                            <div className={s.block}><b>Question</b>: {card.question}</div>
+                            {
+                                isChecked && (
+                                    <>
+                                        <div className={s.radioBlock}>
+                                            <div className={`${s.gap} ${s.block}`}><b>Answer</b>: {card.answer}</div>
+                                            <SuperRadio name={'radio'}
+                                                        options={grades}
+                                                        value={rating}
+                                                        onChangeOption={setRating}
+                                            />
 
-                <div className={s.block}><b>Question</b>: {card.question}</div>
+                                        </div>
 
-                {
-                    isChecked && (
-                        <>
-                            <div className={s.radioBlock}>
-                                <div className={`${s.gap} ${s.block}`}><b>Answer</b>: {card.answer}</div>
+                                    </>
+                                )}
+                        </div>
+                        <div className={s.btnBlock}>
+                            {
+                                isChecked
+                                    ? <SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton>
+                                    : <SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton>
+                            }
+                            <SuperButton onClick={onClickCancelHandler}>Cancel</SuperButton>
+                        </div>
 
-                                <SuperRadio name={'radio'}
-                                            options={grades}
-                                            value={rating}
-                                            onChangeOption={setRating}
-                                />
-                            </div>
-                        </>
-                    )}
-                <div className={s.btnBlock}>
-                    {
-                        isChecked
-                            ? <div><SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton></div>
-                            : <div><SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton></div>
-                    }
-                    <div><SuperButton onClick={onClickCanselHandler}>Cansel</SuperButton></div>
-                </div>
+                    </div>
+                </Tilt>
+
             </div>
 
-        </>
+
+        </div>
     );
 };

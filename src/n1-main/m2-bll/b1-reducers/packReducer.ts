@@ -18,6 +18,7 @@ const initialState: InitialStateType = {
     user_id: '',
 }
 
+
 export const packReducer = (state: InitialStateType = initialState, action: ActionsPacksType): InitialStateType => {
     switch (action.type) {
         case 'packs/SET-PACKS': {
@@ -83,12 +84,12 @@ export const fetchPacksTC = () => (dispatch: Dispatch<ActionsPacksType>, getStat
             dispatch(setAppStatusAC('failed'))
         })
 }
-export const addPackTC = (packName: string): AppThunkType => (dispatch) => {
+export const addPackTC = (packName: string, privateValue:boolean): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     const payload = {
         name: packName,
         deckCover: '',
-        private: false
+        private: privateValue
     }
     PacksAPI.addPack(payload)
         .then(() => {
@@ -114,11 +115,11 @@ export const deletePackTC = (packId: string): AppThunkType => (dispatch) => {
             dispatch(setAppStatusAC('failed'))
         })
 }
-export const updatePackTC = (packId: string): AppThunkType => (dispatch) => {
+export const updatePackTC = (packId: string, packName: string): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     const payload = {
         _id: packId,
-        name: '!!Changed name!!'
+        name: packName
     }
     PacksAPI.updatePack(payload)
         .then(() => {

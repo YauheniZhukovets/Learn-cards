@@ -61,6 +61,10 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
                     </div>
 
                     <div>
+                        Grade
+                    </div>
+
+                    <div>
                         Actions
                     </div>
                 </div>

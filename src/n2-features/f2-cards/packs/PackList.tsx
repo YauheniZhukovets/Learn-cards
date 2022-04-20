@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {
     addPackTC,
@@ -20,6 +20,10 @@ import {PacksSearch} from '../../../n1-main/m1-ui/common/c10-Search/PacksSearch'
 import {Pagination} from '../../../n1-main/m1-ui/common/c12-Pagination/Pagination';
 import {PageSizeSelector} from '../../../n1-main/m1-ui/common/c11-PageSizeSelector/PageSizeSelector';
 import {Sidebar} from '../../../n1-main/m1-ui/sidebar/Sidebar';
+import SuperInputText from "../../../n1-main/m1-ui/common/c1-SuperInputText/SuperInputText";
+import SuperCheckbox from '../../../n1-main/m1-ui/common/c3-SuperCheckbox/SuperCheckbox';
+import Modal from "../../../n1-main/m1-ui/Modal/Modal";
+import ModalButtonsWrap from "../../../n1-main/m1-ui/Modal/ModalButtonsWrap";
 
 
 export const PackList = () => {
@@ -33,13 +37,22 @@ export const PackList = () => {
     const pageCount = useSelector<AppStoreType, number>(state => state.packs.pageCount)
     const sortPack = useSelector<AppStoreType, string>(state => state.packs.sortPacks)
 
+    const [newPackName, setNewPackName] = useState<string>('');
+    const [privateValue, setPrivateValue] = useState<boolean>(false);
+    const [isModal, setIsModal] = useState<boolean>(false);
+
+    const showModal = () => setIsModal(true);
+    const closeModal = () => setIsModal(false);
 
     useEffect(() => {
         dispatch(fetchPacksTC())
     }, [dispatch, myPacks, page, packName, pageCount, sortPack])
 
     const onClickAddNewPackHandler = () => {
-        dispatch(addPackTC('!!!!New pack!!!'))
+        dispatch(addPackTC(newPackName, privateValue))
+        setNewPackName('')
+        setPrivateValue(false)
+        closeModal()
     }
 
     const onChangedPage = (newPage: number) => {
@@ -74,7 +87,7 @@ export const PackList = () => {
                         <div className={style.searchAddBlock}>
                             <PacksSearch/>
                             <SuperButton className={style.btnContainer}
-                                         onClick={onClickAddNewPackHandler}>
+                                         onClick={showModal}>
                                 Add new Pack
                             </SuperButton>
                         </div>
@@ -102,6 +115,17 @@ export const PackList = () => {
                 </div>
 
             </div>
+            <Modal title={'Add new pack'} show={isModal} closeModal={closeModal}>
+                <label>Name pack</label>
+                <SuperInputText value={newPackName} onChangeText={setNewPackName} placeholder={'Enter pack name'}/>
+                <div className={style.containerCheckBox}>
+                    <SuperCheckbox checked={privateValue} onChangeChecked={setPrivateValue}/>
+                    <span style={{marginTop:"10px"}}>Private Pack</span>
+                </div>
+                <ModalButtonsWrap closeModal={closeModal}>
+                    <SuperButton onClick={onClickAddNewPackHandler}>Save</SuperButton>
+                </ModalButtonsWrap>
+            </Modal>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import {Navigate, NavLink, useParams} from 'react-router-dom';
 import {PATH} from '../../../n1-main/m1-ui/routes/RoutesRoot';
@@ -9,7 +9,10 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {CardType} from '../../../n1-main/m3-dal/m1-API/cardsAPI';
 import {CardsTable} from './cardsTable/CardsTable';
 import {CardsSearch} from '../../../n1-main/m1-ui/common/c10-Search/CardsSearch';
-import style from '../../../n1-main/m1-ui/styles/CardsPage.module.css';
+import style from "../../../n1-main/m1-ui/styles/CardsPage.module.css";
+import SuperTextArea from "../../../n1-main/m1-ui/SuperTextArea/SuperTextArea";
+import ModalButtonsWrap from "../../../n1-main/m1-ui/Modal/ModalButtonsWrap";
+import Modal from "../../../n1-main/m1-ui/Modal/Modal";
 
 export const CardsList = () => {
     const dispatch = useDispatch()
@@ -23,6 +26,15 @@ export const CardsList = () => {
 
     const {packId} = useParams<{ packId: string }>()
 
+    const [isModalAdd, setIsModalAdd] = useState<boolean>(false)
+    const showModal = () => setIsModalAdd(true);
+    const closeModal = () => setIsModalAdd(false);
+
+    const [newCardQuestion, setNewCardQuestion] = useState<string>('');
+    const [newCardAnswer, setNewCardAnswer] = useState<string>('');
+
+
+
     useEffect(() => {
         if (packId) {
             dispatch(fetchCardsTC(packId, 10))
@@ -32,7 +44,10 @@ export const CardsList = () => {
 
     const onClickAddNewPackHandler = () => {
         if (packId) {
-            dispatch(addCardTC(packId))
+            dispatch(addCardTC(packId, newCardQuestion, newCardAnswer))
+            setNewCardQuestion('')
+            setNewCardAnswer('')
+            closeModal()
         }
     }
 
@@ -54,8 +69,7 @@ export const CardsList = () => {
                         <h1 className={style.titleCardsBlock}> Cards</h1>
                         <div className={style.searchAddBlock}>
                             <CardsSearch/>
-                            {myUserId === packsUserId &&
-                                <SuperButton onClick={onClickAddNewPackHandler}>Add new card</SuperButton>}
+                            {myUserId === packsUserId && <SuperButton onClick={onClickAddNewPackHandler}>Add new card</SuperButton>}
 
                         </div>
                         <div className={style.mainTable}>
@@ -64,7 +78,21 @@ export const CardsList = () => {
                     </div>
                 </div>
             </div>
+            <Modal title={'Card Info'} show={isModalAdd} closeModal={closeModal}>
+                <div className={style.textArea}>
+                    <label>Question</label>
+                    <SuperTextArea value={newCardQuestion} onChangeText={setNewCardQuestion}/>
+                </div>
+                <div className={style.textArea}>
+                    <label>Answer</label>
+                    <SuperTextArea value={newCardAnswer} onChangeText={setNewCardAnswer}/>
+                </div>
+                <ModalButtonsWrap closeModal={closeModal}>
+                    <SuperButton onClick={onClickAddNewPackHandler}>Save</SuperButton>
+                </ModalButtonsWrap>
+            </Modal>
         </div>
+
     );
 };
 

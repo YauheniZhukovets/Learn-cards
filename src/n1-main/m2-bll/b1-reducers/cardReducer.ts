@@ -93,10 +93,12 @@ export const fetchCardsTC = (packUId: string, pageCardsCount: number) => (dispat
             dispatch(setAppStatusAC('failed'))
         })
 }
-export const addCardTC = (cardId: string): AppThunkType => (dispatch) => {
+export const addCardTC = (cardId: string, question: string, answer: string): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     const payload = {
-        cardsPack_id: cardId
+        cardsPack_id: cardId,
+        question: question,
+        answer: answer
     }
     CardsAPI.addCard(payload)
         .then(() => {
@@ -122,11 +124,12 @@ export const deleteCardTC = (cardId: string, packId: string): AppThunkType => (d
             dispatch(setAppStatusAC('failed'))
         })
 }
-export const updateCardTC = (cardId: string, packId: string): AppThunkType => (dispatch) => {
+export const updateCardTC = (cardId: string, packId: string, question: string, answer: string): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     const payload = {
         _id: cardId,
-        question: '!!!new question!!!',
+        question: question,
+        answer: answer
     }
     CardsAPI.updateCard(payload)
         .then(() => {

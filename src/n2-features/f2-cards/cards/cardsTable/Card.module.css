@@ -8,20 +8,29 @@
 }
 
 .question {
-    width: 195px;
+    width: 224px;
     color: rgb(190, 47, 65);
 }
 
+
 .answer {
-    width: 160px;
+    width: 156px;
 }
 
 .updated {
-    width: 105px;
+    width: 150px;
+}
+
+.grade{
+    width: 86px;
+}
+.textArea {
+    margin-bottom: 20px;
+    text-align: left;
 }
 
 .buttons {
-    width: 100px;
+    width: 150px;
 }
 .btn{
     /*height: 29px;*/
@@ -31,6 +40,7 @@
     border-radius: 30px;
     color: white;
     margin:0 2px 0 0;
+    /*.*/
 }
 .btn:active{
     background: rgba(239, 235, 235, 0.92);

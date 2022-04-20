@@ -1,19 +1,17 @@
 {
   "files": {
-    "main.css": "/cards-project/static/css/main.a6d1a936.css",
-    "main.js": "/cards-project/static/js/main.b2ffb7c2.js",
-    "static/js/787.d2ce132a.chunk.js": "/cards-project/static/js/787.d2ce132a.chunk.js",
-    "static/media/tekstura.jpg": "/cards-project/static/media/tekstura.b178d9b7c6c2483d1f40.jpg",
-    "static/media/error.png": "/cards-project/static/media/error.e61f2dd093ea0852f31d.png",
-    "static/media/Spinner.svg": "/cards-project/static/media/Spinner.6fe9a62926760892b05a6a2fa92b8b6b.svg",
-    "static/media/IconSearch.svg": "/cards-project/static/media/IconSearch.8d9366f474f099b342e7.svg",
-    "index.html": "/cards-project/index.html",
-    "main.a6d1a936.css.map": "/cards-project/static/css/main.a6d1a936.css.map",
-    "main.b2ffb7c2.js.map": "/cards-project/static/js/main.b2ffb7c2.js.map",
-    "787.d2ce132a.chunk.js.map": "/cards-project/static/js/787.d2ce132a.chunk.js.map"
+    "main.css": "/Learn-cards/static/css/main.ecf0b33c.css",
+    "main.js": "/Learn-cards/static/js/main.0c12cf0e.js",
+    "static/media/tekstura.jpg": "/Learn-cards/static/media/tekstura.b178d9b7c6c2483d1f40.jpg",
+    "static/media/error.png": "/Learn-cards/static/media/error.e61f2dd093ea0852f31d.png",
+    "static/media/Spinner.svg": "/Learn-cards/static/media/Spinner.6fe9a62926760892b05a6a2fa92b8b6b.svg",
+    "static/media/IconSearch.svg": "/Learn-cards/static/media/IconSearch.8d9366f474f099b342e7.svg",
+    "index.html": "/Learn-cards/index.html",
+    "main.ecf0b33c.css.map": "/Learn-cards/static/css/main.ecf0b33c.css.map",
+    "main.0c12cf0e.js.map": "/Learn-cards/static/js/main.0c12cf0e.js.map"
   },
   "entrypoints": [
-    "static/css/main.a6d1a936.css",
-    "static/js/main.b2ffb7c2.js"
+    "static/css/main.ecf0b33c.css",
+    "static/js/main.0c12cf0e.js"
   ]
 }

@@ -1,30 +1,58 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from './CardsSearch.module.css'
 import {useDispatch} from 'react-redux';
-import {setFilteredCardsAC} from '../../../m2-bll/b1-reducers/cardReducer';
+import {setAnswerFilteredCardsAC, setQuestionFilteredCardsAC} from '../../../m2-bll/b1-reducers/cardReducer';
 
 export const CardsSearch = () => {
     const dispatch = useDispatch()
 
-    let [event, setEvent] = useState<string>('')
+    let [questionEvent, setQuestionEvent] = useState<string>('')
+    let [answerEvent, setAnswerEvent] = useState<string>('')
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setEvent(e.currentTarget.value)
-
-    };
-    let onClickHandler = () => {
-        dispatch(setFilteredCardsAC(event));
-
+    const handleQuestionChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setQuestionEvent(e.currentTarget.value)
     }
+
+    const handleAnswerChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setAnswerEvent(e.currentTarget.value)
+    }
+
+    let onClickQuestionFilteredHandler = () => {
+        setAnswerEvent('')
+        dispatch(setAnswerFilteredCardsAC(''))
+        dispatch(setQuestionFilteredCardsAC(questionEvent));
+    }
+
+    let onClickAnswerFilteredHandler = () => {
+        setQuestionEvent('')
+        dispatch(setQuestionFilteredCardsAC(''));
+        dispatch(setAnswerFilteredCardsAC(answerEvent));
+    }
+
     return (
-        <div className={s.wrap}>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={event}
-                onChange={handleChange}
-            />
-            <button onClick={onClickHandler} className={s.btnSearch}></button>
+        <div>
+            <div className={s.wrap}>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Search question"
+                        value={questionEvent}
+                        onChange={handleQuestionChange}
+                    />
+                    <button onClick={onClickQuestionFilteredHandler} className={s.btnSearch}></button>
+                </div>
+            </div>
+            <div className={s.wrap}>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Search answer"
+                        value={answerEvent}
+                        onChange={handleAnswerChange}
+                    />
+                    <button onClick={onClickAnswerFilteredHandler} className={s.btnSearch}></button>
+                </div>
+            </div>
         </div>
     );
 }

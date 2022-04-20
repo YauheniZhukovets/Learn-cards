@@ -9,7 +9,7 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {CardType} from '../../../n1-main/m3-dal/m1-API/cardsAPI';
 import {CardsTable} from './cardsTable/CardsTable';
 import {CardsSearch} from '../../../n1-main/m1-ui/common/c10-Search/CardsSearch';
-import style from "../../../n1-main/m1-ui/styles/CardsPage.module.css";
+import style from '../../../n1-main/m1-ui/styles/CardsPage.module.css';
 
 export const CardsList = () => {
     const dispatch = useDispatch()
@@ -18,14 +18,16 @@ export const CardsList = () => {
     const packsUserId = useSelector<AppStoreType, string>(state => state.cards.packUserId)
     const myUserId = useSelector<AppStoreType, string | undefined>(state => state.login.user?._id)
     const cardQuestion = useSelector<AppStoreType, string>(state => state.cards.cardQuestion)
+    const cardAnswer = useSelector<AppStoreType, string>(state => state.cards.cardAnswer)
+    const cardsSort = useSelector<AppStoreType, string>(state => state.cards.sortCards)
 
     const {packId} = useParams<{ packId: string }>()
 
     useEffect(() => {
         if (packId) {
-            dispatch(fetchCardsTC(packId,10))
+            dispatch(fetchCardsTC(packId, 10))
         }
-    }, [dispatch, packId, cardQuestion])
+    }, [dispatch, packId, cardQuestion, cardAnswer, cardsSort])
 
 
     const onClickAddNewPackHandler = () => {
@@ -52,7 +54,8 @@ export const CardsList = () => {
                         <h1 className={style.titleCardsBlock}> Cards</h1>
                         <div className={style.searchAddBlock}>
                             <CardsSearch/>
-                            {myUserId === packsUserId && <SuperButton onClick={onClickAddNewPackHandler}>Add new card</SuperButton>}
+                            {myUserId === packsUserId &&
+                                <SuperButton onClick={onClickAddNewPackHandler}>Add new card</SuperButton>}
 
                         </div>
                         <div className={style.mainTable}>

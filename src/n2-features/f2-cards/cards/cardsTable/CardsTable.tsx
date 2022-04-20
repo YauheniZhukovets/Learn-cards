@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {CardType} from '../../../../n1-main/m3-dal/m1-API/cardsAPI';
 import {Card} from './Card';
-import packsS from '../../packs/packsTable/PacksTable.module.css';
+import cardsS from './CardsTable.module.css'
 import {useDispatch} from 'react-redux';
 import {setCardsSortAC} from '../../../../n1-main/m2-bll/b1-reducers/cardReducer';
 
@@ -46,8 +46,8 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
 
     return (
         <div>
-            <div className={packsS.tableHeaderWrapper}>
-                <div className={packsS.tableHeader}>
+            <div className={cardsS.tableHeaderWrapper}>
+                <div className={cardsS.tableHeader}>
                     <div onClick={questionSortHandler}>
                         Question
                     </div>

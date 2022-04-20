@@ -20,22 +20,22 @@ const initialState: InitialStateType = {
 
 export const packReducer = (state: InitialStateType = initialState, action: ActionsPacksType): InitialStateType => {
     switch (action.type) {
-        case 'pack/SET-PACKS': {
+        case 'packs/SET-PACKS': {
             return {...state, ...action.payload}
         }
-        case 'pack/SET-MY-PACKS': {
+        case 'packs/SET-MY-PACKS': {
             return {...state, myPacks: action.payload.value, min: 0}
         }
-        case 'pack/SET-FILTERED-PACKS': {
+        case 'packs/SET-FILTERED-PACKS': {
             return {...state, packName: action.payload.packName}
         }
-        case 'pack/CHANGE-CURRENT-PAGE': {
+        case 'packs/CHANGE-CURRENT-PAGE': {
             return {...state, page: action.payload.page}
         }
-        case 'pack/SET-PAGE-COUNT': {
+        case 'packs/SET-PAGE-COUNT': {
             return {...state, pageCount: action.payload.pageCount}
         }
-        case 'pack/SET-PACKS-SORT':
+        case 'packs/SET-PACKS-SORT':
             return {...state, sortPacks: action.payload.sortPacks}
         default:
             return state
@@ -44,22 +44,22 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
 
 //action
 export const setPacksAC = (data: PacksResponseType) => {
-    return {type: 'pack/SET-PACKS', payload: data} as const
+    return {type: 'packs/SET-PACKS', payload: data} as const
 }
 export const setMyPacksAC = (value: MyPackType) => {
-    return {type: 'pack/SET-MY-PACKS', payload: {value}} as const
+    return {type: 'packs/SET-MY-PACKS', payload: {value}} as const
 }
 export const setFilteredPacksAC = (packName: string) => {
-    return {type: 'pack/SET-FILTERED-PACKS', payload: {packName}} as const
+    return {type: 'packs/SET-FILTERED-PACKS', payload: {packName}} as const
 }
 export const changeCurrentPageAC = (page: number) => {
-    return {type: 'pack/CHANGE-CURRENT-PAGE', payload: {page}} as const
+    return {type: 'packs/CHANGE-CURRENT-PAGE', payload: {page}} as const
 }
 export const setPageCountAC = (pageCount: number) => {
-    return {type: 'pack/SET-PAGE-COUNT', payload: {pageCount}} as const
+    return {type: 'packs/SET-PAGE-COUNT', payload: {pageCount}} as const
 }
 export const setPacksSortAC = (sortPacks: string) => {
-    return {type: 'pack/SET-PACKS-SORT', payload: {sortPacks}} as const
+    return {type: 'packs/SET-PACKS-SORT', payload: {sortPacks}} as const
 }
 
 //thunk

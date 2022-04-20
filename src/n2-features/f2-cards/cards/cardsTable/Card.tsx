@@ -29,8 +29,8 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
 
     return (
         <div className={s.item}>
-            <div className={s.nameItem}>{card.question}</div>
-            <div className={s.cardsCount}>{card.answer}</div>
+            <div className={s.question}>{card.question.slice(0, 20)}...</div>
+            <div className={s.answer}>{card.answer.slice(0, 15)}...</div>
             <div className={s.updated}>{card.updated.slice(0, 10)}</div>
             <div className={s.buttons}>{myUserId === card.user_id &&
                 <>

@@ -18,27 +18,27 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({packs}) => {
 
     const nameSortHandler = useCallback(() => {
         if (nameSortValue === '1name') {
-            setNameSortValue(() => '0name');
+            setNameSortValue('0name');
         } else {
-            setNameSortValue(() => '1name');
+            setNameSortValue('1name');
         }
         dispatch(setPacksSortAC(nameSortValue));
     }, [dispatch, nameSortValue]);
 
     const cardsSortHandler = useCallback(() => {
         if (cardsValue === '1cardsCount') {
-            setCardsValue(() => '0cardsCount');
+            setCardsValue('0cardsCount');
         } else {
-            setCardsValue(() => '1cardsCount');
+            setCardsValue('1cardsCount');
         }
         dispatch(setPacksSortAC(cardsValue));
     }, [dispatch, cardsValue]);
 
     const lastUpdatedSortHandler = useCallback(() => {
         if (lastUpdatedValue === '1updated') {
-            setLastUpdatedValue(() => '0updated');
+            setLastUpdatedValue('0updated');
         } else {
-            setLastUpdatedValue(() => '1updated');
+            setLastUpdatedValue( '1updated');
         }
         dispatch(setPacksSortAC(lastUpdatedValue));
     }, [dispatch, lastUpdatedValue]);

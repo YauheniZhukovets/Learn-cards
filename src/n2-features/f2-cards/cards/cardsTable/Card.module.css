@@ -7,29 +7,21 @@
 
 }
 
-.nameItem {
-    width: 250px;
+.question {
+    width: 195px;
     color: rgb(190, 47, 65);
 }
-.nameItem:hover {
-    width: 250px;
-    color: rgba(9, 1, 3);
-}
-.nameItem:active {
-    width: 250px;
-    color: aqua;
-}
 
-.cardsCount {
-    width: 40px;
+.answer {
+    width: 160px;
 }
 
 .updated {
-    width: 140px;
+    width: 105px;
 }
 
 .buttons {
-    width: 150px;
+    width: 100px;
 }
 .btn{
     /*height: 29px;*/

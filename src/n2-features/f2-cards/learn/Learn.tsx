@@ -10,6 +10,7 @@ import {PATH} from '../../../n1-main/m1-ui/routes/RoutesRoot';
 import SuperRadio from '../../../n1-main/m1-ui/common/c6-SuperRadio/SuperRadio';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import {Loading} from '../../../n1-main/m1-ui/common/c0-Preloder/Loading';
+import s from './Learn.module.css'
 
 
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
@@ -82,29 +83,33 @@ export const Learn = () => {
     return (
         <>
             <Header/>
-            <div>
+            <div className={s.mainBlock}>
                 <h2>Learn {packName}</h2>
 
-                <div><b>Question</b>: {card.question}</div>
+                <div className={s.block}><b>Question</b>: {card.question}</div>
 
                 {
                     isChecked && (
                         <>
-                            <div><b>Answer</b>: {card.answer}</div>
+                            <div className={s.radioBlock}>
+                                <div className={`${s.gap} ${s.block}`}><b>Answer</b>: {card.answer}</div>
 
-                            <SuperRadio name={'radio'}
-                                        options={grades}
-                                        value={rating}
-                                        onChangeOption={setRating}
-                            />
+                                <SuperRadio name={'radio'}
+                                            options={grades}
+                                            value={rating}
+                                            onChangeOption={setRating}
+                                />
+                            </div>
                         </>
                     )}
-                {
-                    isChecked
-                        ? <div><SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton></div>
-                        : <div><SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton></div>
-                }
-                <div><SuperButton onClick={onClickCanselHandler}>Cansel</SuperButton></div>
+                <div className={s.btnBlock}>
+                    {
+                        isChecked
+                            ? <div><SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton></div>
+                            : <div><SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton></div>
+                    }
+                    <div><SuperButton onClick={onClickCanselHandler}>Cansel</SuperButton></div>
+                </div>
             </div>
 
         </>

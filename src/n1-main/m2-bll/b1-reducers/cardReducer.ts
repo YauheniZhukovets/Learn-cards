@@ -21,7 +21,7 @@ const initialState: InitialCardsStateType = {
     cardQuestion: '',
     min: 0,
     max: 0,
-    sortCards: '0grade',
+    sortCards: '0updated',
     cardsPack_id: '',
 }
 
@@ -30,11 +30,17 @@ export const cardReducer = (state: InitialCardsStateType = initialState, action:
         case 'card/SET-CARDS': {
             return {...state, ...action.payload}
         }
-        case 'cards/SET-FILTERED-CARDS': {
+        case 'cards/SET-QUESTION-FILTERED-CARDS': {
             return {...state, cardQuestion: action.payload.cardQuestion}
+        }
+        case 'cards/SET-ANSWER-FILTERED-CARDS': {
+            return {...state, cardAnswer: action.payload.cardAnswer}
         }
         case 'cards/SET-PAGE-COUNT': {
             return {...state, pageCount: action.payload.pageCount}
+        }
+        case 'cards/SET-CARDS-SORT': {
+            return {...state, sortCards: action.payload.sortCards}
         }
         case 'cards/SET-CARDS-GRADE': {
             return {
@@ -52,8 +58,14 @@ export const cardReducer = (state: InitialCardsStateType = initialState, action:
 export const setCardsAC = (data: CardsResponseType) => {
     return {type: 'card/SET-CARDS', payload: data} as const
 }
-export const setFilteredCardsAC = (cardQuestion: string) => {
-    return {type: 'cards/SET-FILTERED-CARDS', payload: {cardQuestion}} as const
+export const setQuestionFilteredCardsAC = (cardQuestion: string) => {
+    return {type: 'cards/SET-QUESTION-FILTERED-CARDS', payload: {cardQuestion}} as const
+}
+export const setAnswerFilteredCardsAC = (cardAnswer: string) => {
+    return {type: 'cards/SET-ANSWER-FILTERED-CARDS', payload: {cardAnswer}} as const
+}
+export const setCardsSortAC = (sortCards: string) => {
+    return {type: 'cards/SET-CARDS-SORT', payload: {sortCards}} as const
 }
 export const setPageCountAC = (pageCount: number) => {
     return {type: 'cards/SET-PAGE-COUNT', payload: {pageCount}} as const
@@ -163,14 +175,18 @@ export type InitialCardsStateType = {
 }
 
 type GetCardsACType = ReturnType<typeof setCardsAC>
-type SetFilteredCardsACType = ReturnType<typeof setFilteredCardsAC>
+type SetQuestionFilteredCardsACType = ReturnType<typeof setQuestionFilteredCardsAC>
+type SetAnswerFilteredCardsACType = ReturnType<typeof setAnswerFilteredCardsAC>
 type SetPageCountACType = ReturnType<typeof setPageCountAC>
 type SetCardsGradeACType = ReturnType<typeof setCardsGradeAC>
+type SetCardsSortACType = ReturnType<typeof setCardsSortAC>
 
 export type ActionsCardsType =
     GetCardsACType
     | SetErrorACType
     | SetAppStatusACType
-    | SetFilteredCardsACType
+    | SetQuestionFilteredCardsACType
+    | SetAnswerFilteredCardsACType
     | SetPageCountACType
     | SetCardsGradeACType
+    | SetCardsSortACType

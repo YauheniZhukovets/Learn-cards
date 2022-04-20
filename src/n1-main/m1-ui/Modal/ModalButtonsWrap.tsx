@@ -2,7 +2,6 @@ import React from 'react';
 import SuperButton from '../common/c2-SuperButton/SuperButton';
 import styles from "./Modal.module.css";
 
-
 type PropsType = {
     children: React.ReactNode
     closeModal: () => void

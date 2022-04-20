@@ -65,7 +65,7 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({packs}) => {
                 </div>
             </div>
 
-            <div>
+            <div className={packsS.tableContainer}>
                 <div style={{height: '440px'}}>
                     {packs && packs.map(pack => <Pack key={pack._id} pack={pack}/>)}
                 </div>

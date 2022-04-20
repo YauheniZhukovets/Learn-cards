@@ -11,8 +11,6 @@ import SuperButton from "../../../../n1-main/m1-ui/common/c2-SuperButton/SuperBu
 import ModalButtonsWrap from "../../../../n1-main/m1-ui/Modal/ModalButtonsWrap";
 import SuperTextArea from "../../../../n1-main/m1-ui/SuperTextArea/SuperTextArea";
 
-
-
 export type CardPropsType = {
     card: CardType
 }
@@ -34,10 +32,12 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
     }
 
     const onClickDeleteCardHandler = () => {
+        setIsShownModal(false)
         dispatch(deleteCardTC(card._id, card.cardsPack_id))
     }
     const onClickUpdateCardHandler = () => {
         dispatch(updateCardTC(card._id, card.cardsPack_id, newQuestion, newAnswer))
+        closeModal()
     }
 
     if (status === 'loading') {
@@ -46,8 +46,8 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
 
     return (
         <div className={s.item}>
-            <div className={s.question}>{card.question.slice(0, 20)}...</div>
-            <div className={s.answer}>{card.answer.slice(0, 15)}...</div>
+            <div className={s.question}>{card.question.slice(0, 20)}</div>
+            <div className={s.answer}>{card.answer.slice(0, 15)}</div>
             <div className={s.updated}>{card.updated.slice(0, 10)}</div>
             <div className={s.grade}>*****</div>
             <div className={s.buttons}>{myUserId === card.user_id &&

@@ -11,7 +11,6 @@ import SuperRadio from '../../../n1-main/m1-ui/common/c6-SuperRadio/SuperRadio';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import {Loading} from '../../../n1-main/m1-ui/common/c0-Preloder/Loading';
 import s from './Learn.module.css'
-import Tilt from "react-parallax-tilt";
 
 
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
@@ -80,47 +79,41 @@ export const Learn = () => {
 
     if (status === 'loading') return <Loading/>
 
-
     return (
-        <div >
+        <div>
             <Header/>
             <div className={s.mainContainer}>
-                <Tilt>
-                    <div className={s.container_log}>
-                        <h2>Learn {packName}</h2>
-                        <div>
-                            <div className={s.block}><b>Question</b>: {card.question}</div>
-                            {
-                                isChecked && (
-                                    <>
-                                        <div className={s.radioBlock}>
-                                            <div className={`${s.gap} ${s.block}`}><b>Answer</b>: {card.answer}</div>
-                                            <SuperRadio name={'radio'}
-                                                        options={grades}
-                                                        value={rating}
-                                                        onChangeOption={setRating}
-                                            />
 
-                                        </div>
+                <div className={s.container_log}>
+                    <h2>Learn {packName}</h2>
+                    <div>
+                        <div className={s.block}><b>Question</b>: {card.question}</div>
+                        {
+                            isChecked && (
+                                <>
+                                    <div className={s.radioBlock}>
+                                        <div className={`${s.gap} ${s.block}`}><b>Answer</b>: {card.answer}</div>
+                                        <SuperRadio name={'radio'}
+                                                    options={grades}
+                                                    value={rating}
+                                                    onChangeOption={setRating}
+                                        />
 
-                                    </>
-                                )}
-                        </div>
-                        <div className={s.btnBlock}>
-                            {
-                                isChecked
-                                    ? <SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton>
-                                    : <SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton>
-                            }
-                            <SuperButton onClick={onClickCancelHandler}>Cancel</SuperButton>
-                        </div>
+                                    </div>
 
+                                </>
+                            )}
                     </div>
-                </Tilt>
-
+                    <div className={s.btnBlock}>
+                        {
+                            isChecked
+                                ? <SuperButton onClick={onNext} disabled={!rating}>Next</SuperButton>
+                                : <SuperButton onClick={() => setIsChecked(true)}>Answer</SuperButton>
+                        }
+                        <SuperButton onClick={onClickCancelHandler}>Cancel</SuperButton>
+                    </div>
+                </div>
             </div>
-
-
         </div>
     );
 };

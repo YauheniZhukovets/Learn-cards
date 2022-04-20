@@ -7,15 +7,15 @@
     align-items: center;
     left: 27%;
     /*margin-top: 20px;*/
-    margin-top: 95px;
+    margin-top: 40px;
     /*border: 2px solid aqua;*/
 
 }
 .container_log{
     /*position: absolute;*/
-    width: 413px;
+    width: 700px;
     min-height: 560px;
-    max-height: 580px;
+    /*max-height: 580px;*/
     left: 670px;
     top: 80px;
 

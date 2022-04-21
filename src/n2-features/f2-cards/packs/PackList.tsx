@@ -12,19 +12,17 @@ import {PATH} from '../../../n1-main/m1-ui/routes/RoutesRoot';
 import {Navigate} from 'react-router-dom';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import SuperButton from '../../../n1-main/m1-ui/common/c2-SuperButton/SuperButton';
-
 import {PackType} from '../../../n1-main/m3-dal/m1-API/packsAPI';
 import style from '../../../n1-main/m1-ui/styles/PackPage.module.css';
 import {PacksTable} from './packsTable/PacksTable';
 import {PacksSearch} from '../../../n1-main/m1-ui/common/c10-Search/PacksSearch';
 import {Pagination} from '../../../n1-main/m1-ui/common/c12-Pagination/Pagination';
 import {PageSizeSelector} from '../../../n1-main/m1-ui/common/c11-PageSizeSelector/PageSizeSelector';
-import {Sidebar} from '../../../n1-main/m1-ui/sidebar/Sidebar';
-import SuperInputText from "../../../n1-main/m1-ui/common/c1-SuperInputText/SuperInputText";
+import SuperInputText from '../../../n1-main/m1-ui/common/c1-SuperInputText/SuperInputText';
 import SuperCheckbox from '../../../n1-main/m1-ui/common/c3-SuperCheckbox/SuperCheckbox';
-import Modal from "../../../n1-main/m1-ui/Modal/Modal";
-import ModalButtonsWrap from "../../../n1-main/m1-ui/Modal/ModalButtonsWrap";
-
+import Modal from '../../../n1-main/m1-ui/Modal/Modal';
+import ModalButtonsWrap from '../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
+import {Sidebar} from '../../../n1-main/m1-ui/sidebar/Sidebar';
 
 export const PackList = () => {
     const dispatch = useDispatch()
@@ -36,6 +34,8 @@ export const PackList = () => {
     const cardPacksTotalCount = useSelector<AppStoreType, number>(state => state.packs.cardPacksTotalCount)
     const pageCount = useSelector<AppStoreType, number>(state => state.packs.pageCount)
     const sortPack = useSelector<AppStoreType, string>(state => state.packs.sortPacks)
+    const min = useSelector<AppStoreType, number>(state => state.packs.min)
+    const max = useSelector<AppStoreType, number>(state => state.packs.max)
 
     const [newPackName, setNewPackName] = useState<string>('');
     const [privateValue, setPrivateValue] = useState<boolean>(false);
@@ -46,7 +46,7 @@ export const PackList = () => {
 
     useEffect(() => {
         dispatch(fetchPacksTC())
-    }, [dispatch, myPacks, page, packName, pageCount, sortPack])
+    }, [dispatch, myPacks, page, packName, pageCount, sortPack, min, max])
 
     const onClickAddNewPackHandler = () => {
         dispatch(addPackTC(newPackName, privateValue))
@@ -74,12 +74,7 @@ export const PackList = () => {
                 <div className={style.container_log}>
                     <div className={style.blockAvatar}>
                         <div className={style.avatarUrl}>
-                            <h2>Show Cards Packs</h2>
                             <Sidebar/>
-                        </div>
-                        <div className={style.descriptionForDoubleRangeSlider}>Cards count in a pack</div>
-                        <div className={style.DoubleRangeSliderContainer}>
-                            {/*<SuperDoubleRange/>*/}
                         </div>
                     </div>
                     <div className={style.packsBlock}>
@@ -120,7 +115,7 @@ export const PackList = () => {
                 <SuperInputText value={newPackName} onChangeText={setNewPackName} placeholder={'Enter pack name'}/>
                 <div className={style.containerCheckBox}>
                     <SuperCheckbox checked={privateValue} onChangeChecked={setPrivateValue}/>
-                    <span style={{marginTop:"10px"}}>Private Pack</span>
+                    <span style={{marginTop: '10px'}}>Private Pack</span>
                 </div>
                 <ModalButtonsWrap closeModal={closeModal}>
                     <SuperButton onClick={onClickAddNewPackHandler}>Save</SuperButton>

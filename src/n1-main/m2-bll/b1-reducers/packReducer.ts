@@ -25,19 +25,26 @@ export const packReducer = (state: InitialStateType = initialState, action: Acti
             return {...state, ...action.payload}
         }
         case 'packs/SET-MY-PACKS': {
-            return {...state, myPacks: action.payload.value, min: 0}
+            return {...state, myPacks: action.payload, min: 0}
         }
         case 'packs/SET-FILTERED-PACKS': {
-            return {...state, packName: action.payload.packName}
+            return {...state, packName: action.payload}
         }
         case 'packs/CHANGE-CURRENT-PAGE': {
-            return {...state, page: action.payload.page}
+            return {...state, page: action.payload}
         }
         case 'packs/SET-PAGE-COUNT': {
-            return {...state, pageCount: action.payload.pageCount}
+            return {...state, pageCount: action.payload}
         }
-        case 'packs/SET-PACKS-SORT':
-            return {...state, sortPacks: action.payload.sortPacks}
+        case 'packs/SET-PACKS-SORT': {
+            return {...state, sortPacks: action.payload}
+        }
+        case 'packs/SET-MIN': {
+            return {...state, min: action.payload}
+        }
+        case 'packs/SET-MAX': {
+            return {...state, max: action.payload}
+        }
         default:
             return state
     }
@@ -48,30 +55,36 @@ export const setPacksAC = (data: PacksResponseType) => {
     return {type: 'packs/SET-PACKS', payload: data} as const
 }
 export const setMyPacksAC = (value: MyPackType) => {
-    return {type: 'packs/SET-MY-PACKS', payload: {value}} as const
+    return {type: 'packs/SET-MY-PACKS', payload: value} as const
 }
 export const setFilteredPacksAC = (packName: string) => {
-    return {type: 'packs/SET-FILTERED-PACKS', payload: {packName}} as const
+    return {type: 'packs/SET-FILTERED-PACKS', payload: packName} as const
 }
 export const changeCurrentPageAC = (page: number) => {
-    return {type: 'packs/CHANGE-CURRENT-PAGE', payload: {page}} as const
+    return {type: 'packs/CHANGE-CURRENT-PAGE', payload: page} as const
 }
 export const setPageCountAC = (pageCount: number) => {
-    return {type: 'packs/SET-PAGE-COUNT', payload: {pageCount}} as const
+    return {type: 'packs/SET-PAGE-COUNT', payload: pageCount} as const
 }
 export const setPacksSortAC = (sortPacks: string) => {
-    return {type: 'packs/SET-PACKS-SORT', payload: {sortPacks}} as const
+    return {type: 'packs/SET-PACKS-SORT', payload: sortPacks} as const
+}
+export const setMinAC = (min: number) => {
+    return {type: 'packs/SET-MIN', payload: min} as const
+}
+export const setMaxAC = (max: number) => {
+    return {type: 'packs/SET-MAX', payload: max} as const
 }
 
 //thunk
 export const fetchPacksTC = () => (dispatch: Dispatch<ActionsPacksType>, getState: () => AppStoreType) => {
     dispatch(setAppStatusAC('loading'))
 
-    let {packName, min, max, sortPacks, page, pageCount, user_id, myPacks} = getState().packs
+    let {cardPacksTotalCount, packName, min, max, sortPacks, page, pageCount, user_id, myPacks} = getState().packs
     let myUserId = getState().login.user!._id
 
     user_id = myPacks === 'My' ? myUserId : user_id
-    const payload = {packName, min, max, sortPacks, page, pageCount, user_id}
+    const payload = {cardPacksTotalCount, packName, min, max, sortPacks, page, pageCount, user_id}
 
     PacksAPI.getPacks(payload)
         .then((res) => {
@@ -84,7 +97,7 @@ export const fetchPacksTC = () => (dispatch: Dispatch<ActionsPacksType>, getStat
             dispatch(setAppStatusAC('failed'))
         })
 }
-export const addPackTC = (packName: string, privateValue:boolean): AppThunkType => (dispatch) => {
+export const addPackTC = (packName: string, privateValue: boolean): AppThunkType => (dispatch) => {
     dispatch(setAppStatusAC('loading'))
     const payload = {
         name: packName,
@@ -156,6 +169,8 @@ type setFilteredPacksACType = ReturnType<typeof setFilteredPacksAC>
 type ChangeCurrentPageACType = ReturnType<typeof changeCurrentPageAC>
 type SetPageCountACType = ReturnType<typeof setPageCountAC>
 type SortPacksACType = ReturnType<typeof setPacksSortAC>
+type SetMinACType = ReturnType<typeof setMinAC>
+type SetMaxACType = ReturnType<typeof setMaxAC>
 
 export type ActionsPacksType =
     GetPacksACType
@@ -166,3 +181,5 @@ export type ActionsPacksType =
     | ChangeCurrentPageACType
     | SetPageCountACType
     | SortPacksACType
+    | SetMinACType
+    | SetMaxACType

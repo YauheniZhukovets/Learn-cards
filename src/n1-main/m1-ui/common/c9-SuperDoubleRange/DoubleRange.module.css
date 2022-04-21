@@ -29,6 +29,7 @@ input[type=range].double::-webkit-slider-thumb {
 }
 
 .wrapper {
+    width: 100%;
     display: inline-block;
     position: relative;
 }

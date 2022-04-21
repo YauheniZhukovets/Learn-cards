@@ -16,6 +16,7 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
     const [questionSortValue, setQuestionSortValue] = useState<'0question' | '1question'>('0question');
     const [answerSortValue, setAnswerSortValue] = useState<'0answer' | '1answer'>('0answer');
     const [lastUpdatedValue, setLastUpdatedValue] = useState<'0updated' | '1updated'>('0updated');
+    const [gradeSortValue, setGradeSortValue] = useState<'0grade' | '1grade'>('0grade');
 
     const questionSortHandler = useCallback(() => {
         if (questionSortValue === '1question') {
@@ -44,6 +45,15 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
         dispatch(setCardsSortAC(lastUpdatedValue))
     }, [dispatch, lastUpdatedValue])
 
+    const gradeSortHandler = useCallback(() => {
+        if (gradeSortValue === '1grade') {
+            setGradeSortValue('0grade')
+        } else {
+            setGradeSortValue('1grade')
+        }
+        dispatch(setCardsSortAC(gradeSortValue))
+    }, [dispatch, gradeSortValue])
+
     return (
         <div>
             <div className={cardsS.tableHeaderWrapper}>
@@ -60,7 +70,7 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
                         Last Updated
                     </div>
 
-                    <div>
+                    <div onClick={gradeSortHandler}>
                         Grade
                     </div>
 

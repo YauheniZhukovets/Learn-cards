@@ -10,6 +10,7 @@ import Modal from '../../../../n1-main/m1-ui/Modal/Modal';
 import SuperButton from '../../../../n1-main/m1-ui/common/c2-SuperButton/SuperButton';
 import ModalButtonsWrap from '../../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
 import SuperTextArea from '../../../../n1-main/m1-ui/SuperTextArea/SuperTextArea';
+import StarRating from './StarRating';
 
 export type CardPropsType = {
     card: CardType
@@ -65,7 +66,7 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
             <div className={s.question}>{card.question.slice(0, 20)}</div>
             <div className={s.answer}>{card.answer.slice(0, 15)}</div>
             <div className={s.updated}>{card.updated.slice(0, 10)}</div>
-
+            <StarRating numTotalStars={5} initialRating={card.grade}/>
             {/*<div className={s.grade}>{gradeCard(grate)}</div>*/}
             <div className={s.buttons}>{myUserId === card.user_id &&
                 <>

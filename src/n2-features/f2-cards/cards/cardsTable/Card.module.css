@@ -21,9 +21,6 @@
     width: 150px;
 }
 
-.grade{
-    width: 86px;
-}
 .textArea {
     margin-bottom: 20px;
     text-align: left;
@@ -54,6 +51,7 @@
 }
 .starRating {
     display: inline-block;
+    width: 90px;
 }
 
 

@@ -48,3 +48,12 @@
     border-radius: 30px;
     color: black;
 }
+
+.starRatingStar {
+    transition: color 0.03s;
+}
+.starRating {
+    display: inline-block;
+}
+
+

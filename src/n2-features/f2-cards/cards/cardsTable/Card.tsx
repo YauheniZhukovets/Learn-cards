@@ -16,7 +16,7 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = ({card}) => {
-    const grate = card.grade
+    /*const grate = card.grade*/
 
     const dispatch = useDispatch()
     const status = useSelector<AppStoreType, AppStatusType>(state => state.app.status)
@@ -42,7 +42,7 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
         closeModal()
     }
 
-    const gradeCard = (grate: number) => {
+ /*   const gradeCard = (grate: number) => {
         if (grate < 2) {
             return '*'
         } else if (grate < 3) {
@@ -54,7 +54,7 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
         } else if (grate < 6) {
             return  '*****'
         }
-    }
+    }*/
 
     if (status === 'loading') {
         return <Loading/>
@@ -65,7 +65,8 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
             <div className={s.question}>{card.question.slice(0, 20)}</div>
             <div className={s.answer}>{card.answer.slice(0, 15)}</div>
             <div className={s.updated}>{card.updated.slice(0, 10)}</div>
-            <div className={s.grade}>{gradeCard(grate)}</div>
+
+            {/*<div className={s.grade}>{gradeCard(grate)}</div>*/}
             <div className={s.buttons}>{myUserId === card.user_id &&
                 <>
                     <button className={s.btn} onClick={() => showModal('Delete')}>Delete</button>

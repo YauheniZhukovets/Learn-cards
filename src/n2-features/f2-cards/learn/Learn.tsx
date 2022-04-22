@@ -37,6 +37,7 @@ export const Learn = () => {
     const status = useSelector<AppStoreType, AppStatusType>(state => state.app.status)
     const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.login.isLoggedIn)
     const cards = useSelector<AppStoreType, CardType []>((store) => store.cards.cards);
+    /*const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.cardsTotalCount)*/
 
     const [first, setFirst] = useState<boolean>(true);
     const [isChecked, setIsChecked] = useState<boolean>(false);
@@ -55,12 +56,16 @@ export const Learn = () => {
 
     useEffect(() => {
         if (first) {
-            packId && dispatch(fetchCardsTC(packId, 150))
+            packId && dispatch(fetchCardsTC(packId))
             setFirst(false)
         }
         if (cards.length > 0) setCard(getCard(cards));
 
-    }, [cards, first, dispatch, packId,]);
+    }, [cards, first, dispatch, packId, fetchCardsTC]);
+
+    /*useEffect(() => {
+        dispatch(setPageCountAC(cardsTotalCount))
+    }, [cardsTotalCount, dispatch])*/
 
     const onNext = () => {
         if (rating) {

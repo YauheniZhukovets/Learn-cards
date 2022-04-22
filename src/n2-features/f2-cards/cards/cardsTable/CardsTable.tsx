@@ -80,7 +80,7 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
                 </div>
             </div>
 
-            <div>
+            <div className={cardsS.tableContainer}>
                 <div style={{height: '440px'}}>
                     {cards && cards.map(card => <Card key={card._id} card={card}/>)}
                 </div>

@@ -31,21 +31,24 @@ export const cardReducer = (state: InitialCardsStateType = initialState, action:
             return {...state, ...action.payload}
         }
         case 'cards/SET-QUESTION-FILTERED-CARDS': {
-            return {...state, cardQuestion: action.payload.cardQuestion}
+            return {...state, cardQuestion: action.payload}
         }
         case 'cards/SET-ANSWER-FILTERED-CARDS': {
-            return {...state, cardAnswer: action.payload.cardAnswer}
+            return {...state, cardAnswer: action.payload}
         }
         case 'cards/SET-PAGE-COUNT': {
-            return {...state, pageCount: action.payload.pageCount}
+            return {...state, pageCount: action.payload}
         }
         case 'cards/SET-CARDS-SORT': {
-            return {...state, sortCards: action.payload.sortCards}
+            return {...state, sortCards: action.payload}
+        }
+        case 'cards/CHANGE-CURRENT-PAGE-CARDS': {
+            return {...state, page: action.payload}
         }
         case 'cards/SET-CARDS-GRADE': {
             return {
-                ...state, cards: state.cards.map(card => card._id === action.payload.updatedGrade.card_id
-                    ? {...card, shots: action.payload.updatedGrade.shots, grade: action.payload.updatedGrade.grade}
+                ...state, cards: state.cards.map(card => card._id === action.payload.card_id
+                    ? {...card, shots: action.payload.shots, grade: action.payload.grade}
                     : card)
             }
         }
@@ -59,25 +62,28 @@ export const setCardsAC = (data: CardsResponseType) => {
     return {type: 'card/SET-CARDS', payload: data} as const
 }
 export const setQuestionFilteredCardsAC = (cardQuestion: string) => {
-    return {type: 'cards/SET-QUESTION-FILTERED-CARDS', payload: {cardQuestion}} as const
+    return {type: 'cards/SET-QUESTION-FILTERED-CARDS', payload: cardQuestion} as const
 }
 export const setAnswerFilteredCardsAC = (cardAnswer: string) => {
-    return {type: 'cards/SET-ANSWER-FILTERED-CARDS', payload: {cardAnswer}} as const
+    return {type: 'cards/SET-ANSWER-FILTERED-CARDS', payload: cardAnswer} as const
 }
 export const setCardsSortAC = (sortCards: string) => {
-    return {type: 'cards/SET-CARDS-SORT', payload: {sortCards}} as const
+    return {type: 'cards/SET-CARDS-SORT', payload: sortCards} as const
 }
 export const setPageCountAC = (pageCount: number) => {
-    return {type: 'cards/SET-PAGE-COUNT', payload: {pageCount}} as const
+    return {type: 'cards/SET-PAGE-COUNT', payload: pageCount} as const
 }
 export const setCardsGradeAC = (updatedGrade: UpdatedGradeResponseType) => {
-    return {type: 'cards/SET-CARDS-GRADE', payload: {updatedGrade}} as const
+    return {type: 'cards/SET-CARDS-GRADE', payload: updatedGrade} as const
 }
+export const changeCurrentPageCardsAC = (page: number) => {
+    return {type: 'cards/CHANGE-CURRENT-PAGE-CARDS', payload: page} as const
+}
+
 //thunk
-export const fetchCardsTC = (packUId: string, pageCardsCount: number) => (dispatch: Dispatch<ActionsCardsType>, getState: () => AppStoreType) => {
+export const fetchCardsTC = (packUId: string) => (dispatch: Dispatch<ActionsCardsType>, getState: () => AppStoreType) => {
 
     let {cardAnswer, cardQuestion, page, min, max, sortCards, pageCount, cardsPack_id} = getState().cards
-    pageCount = pageCardsCount
     cardsPack_id = packUId
     const payload = {cardAnswer, cardQuestion, page, min, max, sortCards, pageCount, cardsPack_id}
 
@@ -102,7 +108,7 @@ export const addCardTC = (cardId: string, question: string, answer: string): App
     }
     CardsAPI.addCard(payload)
         .then(() => {
-            cardId && dispatch(fetchCardsTC(cardId, 10))
+            cardId && dispatch(fetchCardsTC(cardId))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((e) => {
@@ -115,7 +121,7 @@ export const deleteCardTC = (cardId: string, packId: string): AppThunkType => (d
     dispatch(setAppStatusAC('loading'))
     CardsAPI.deleteCard(cardId)
         .then(() => {
-            dispatch(fetchCardsTC(packId, 10))
+            dispatch(fetchCardsTC(packId))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((e) => {
@@ -133,7 +139,7 @@ export const updateCardTC = (cardId: string, packId: string, question: string, a
     }
     CardsAPI.updateCard(payload)
         .then(() => {
-            dispatch(fetchCardsTC(packId, 10))
+            dispatch(fetchCardsTC(packId))
             dispatch(setAppStatusAC('succeeded'))
         })
         .catch((e) => {
@@ -183,6 +189,7 @@ type SetAnswerFilteredCardsACType = ReturnType<typeof setAnswerFilteredCardsAC>
 type SetPageCountACType = ReturnType<typeof setPageCountAC>
 type SetCardsGradeACType = ReturnType<typeof setCardsGradeAC>
 type SetCardsSortACType = ReturnType<typeof setCardsSortAC>
+type ChangeCurrentPageCardsACType = ReturnType<typeof changeCurrentPageCardsAC>
 
 export type ActionsCardsType =
     GetCardsACType
@@ -193,3 +200,4 @@ export type ActionsCardsType =
     | SetPageCountACType
     | SetCardsGradeACType
     | SetCardsSortACType
+    | ChangeCurrentPageCardsACType

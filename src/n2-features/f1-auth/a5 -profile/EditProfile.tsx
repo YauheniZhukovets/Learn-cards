@@ -22,7 +22,6 @@ export const EditProfile = () => {
     const [name, setName] = useState<string | undefined>(userName)
     const [avatar, setAvatar] = useState<string | undefined>(userAvatar)
 
-
     const updateNameClickHandler = () => {
         dispatch(updateProfileTC({name, avatar}))
         navigate(PATH.PROFILE)

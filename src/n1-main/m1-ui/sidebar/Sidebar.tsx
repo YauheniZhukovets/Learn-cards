@@ -28,7 +28,6 @@ export const Sidebar = () => {
         clearTimeout(id)
     }
 
-
     return (
         <div>
             <div>

@@ -5,7 +5,6 @@ import cardsS from './CardsTable.module.css'
 import {useDispatch} from 'react-redux';
 import {setCardsSortAC} from '../../../../n1-main/m2-bll/b1-reducers/cardReducer';
 
-
 export type CardsTablePropsType = {
     cards: CardType []
 }
@@ -61,25 +60,20 @@ export const CardsTable: React.FC<CardsTablePropsType> = ({cards}) => {
                     <div onClick={questionSortHandler}>
                         Question
                     </div>
-
                     <div onClick={answerSortHandler}>
                         Answer
                     </div>
-
                     <div onClick={lastUpdatedHandler}>
                         Last Updated
                     </div>
-
                     <div onClick={gradeSortHandler}>
                         Grade
                     </div>
-
                     <div>
                         Actions
                     </div>
                 </div>
             </div>
-
             <div className={cardsS.tableContainer}>
                 <div style={{height: '440px'}}>
                     {cards && cards.map(card => <Card key={card._id} card={card}/>)}

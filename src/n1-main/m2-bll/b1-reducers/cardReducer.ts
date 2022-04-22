@@ -40,7 +40,7 @@ export const cardReducer = (state: InitialCardsStateType = initialState, action:
             return {...state, pageCount: action.payload}
         }
         case 'cards/SET-CARDS-SORT': {
-            return {...state, sortCards: action.payload}
+            return {...state, sortCards: action.payload, page: 1}
         }
         case 'cards/CHANGE-CURRENT-PAGE-CARDS': {
             return {...state, page: action.payload}
@@ -81,11 +81,12 @@ export const changeCurrentPageCardsAC = (page: number) => {
 }
 
 //thunk
-export const fetchCardsTC = (packUId: string) => (dispatch: Dispatch<ActionsCardsType>, getState: () => AppStoreType) => {
+export const fetchCardsTC = (packUId: string, maxCardsCount?: number) => (dispatch: Dispatch<ActionsCardsType>, getState: () => AppStoreType) => {
 
     let {cardAnswer, cardQuestion, page, min, max, sortCards, pageCount, cardsPack_id} = getState().cards
     cardsPack_id = packUId
-    const payload = {cardAnswer, cardQuestion, page, min, max, sortCards, pageCount, cardsPack_id}
+    const currentPageCount = maxCardsCount || pageCount
+    const payload = {cardAnswer, cardQuestion, page, min, max, sortCards, pageCount: currentPageCount, cardsPack_id}
 
     dispatch(setAppStatusAC('loading'))
     CardsAPI.getCards(payload)

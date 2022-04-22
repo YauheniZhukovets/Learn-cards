@@ -38,7 +38,7 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({packs}) => {
         if (lastUpdatedValue === '1updated') {
             setLastUpdatedValue('0updated');
         } else {
-            setLastUpdatedValue( '1updated');
+            setLastUpdatedValue('1updated');
         }
         dispatch(setPacksSortAC(lastUpdatedValue));
     }, [dispatch, lastUpdatedValue]);
@@ -50,21 +50,17 @@ export const PacksTable: React.FC<PacksTablePropsType> = ({packs}) => {
                     <div onClick={nameSortHandler}>
                         Name
                     </div>
-
                     <div onClick={cardsSortHandler}>
                         Cards
                     </div>
-
                     <div onClick={lastUpdatedSortHandler}>
                         Last Updated
                     </div>
-
                     <div>
                         Actions
                     </div>
                 </div>
             </div>
-
             <div className={packsS.tableContainer}>
                 <div style={{height: '440px'}}>
                     {packs && packs.map(pack => <Pack key={pack._id} pack={pack}/>)}

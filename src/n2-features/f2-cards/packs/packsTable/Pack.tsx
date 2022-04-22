@@ -7,8 +7,8 @@ import {AppStatusType} from '../../../../n1-main/m2-bll/b1-reducers/appReducer';
 import s from './Pack.module.css'
 import {deletePackTC, updatePackTC} from '../../../../n1-main/m2-bll/b1-reducers/packReducer';
 import {NavLink} from 'react-router-dom';
-import Modal from '../../../../n1-main/m1-ui/Modal/Modal';
-import ModalButtonsWrap from '../../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
+import Modal from '../../../../n1-main/m1-ui/modal/Modal';
+import ModalButtonsWrap from '../../../../n1-main/m1-ui/modal/ModalButtonsWrap';
 import SuperButton from '../../../../n1-main/m1-ui/common/c2-SuperButton/SuperButton';
 import SuperInputText from '../../../../n1-main/m1-ui/common/c1-SuperInputText/SuperInputText';
 
@@ -20,6 +20,7 @@ export const Pack: React.FC<PackPropsType> = ({pack}) => {
     const dispatch = useDispatch()
     const status = useSelector<AppStoreType, AppStatusType>(state => state.app.status)
     const myUserId = useSelector<AppStoreType, string | undefined>(state => state.login.user?._id)
+    const cardsTotalCount = useSelector<AppStoreType, number>(state => state.packs.maxCardsCount)
 
     const [newPackName, setNewPackName] = useState<string>(pack.name);
     const [isShownModal, setIsShownModal] = useState<boolean>(false)
@@ -56,13 +57,13 @@ export const Pack: React.FC<PackPropsType> = ({pack}) => {
                     <button className={s.btn} onClick={() => showModal('Delete')}>Delete</button>
                     <button className={s.btn} onClick={() => showModal('Edit')}>Edit</button>
                 </>
-
             }
-                <NavLink to={`/learn/${pack._id}/${pack.name}`}>
+                <NavLink to={`/learn/${pack._id}/${pack.name}/${cardsTotalCount}`}>
                     <button className={s.btn} disabled={!pack.cardsCount}>Learn</button>
                 </NavLink>
             </div>
-            {modalType === 'Delete' &&
+            {
+                modalType === 'Delete' &&
                 <Modal title={'Delete Pack'} show={isShownModal} closeModal={closeModal}>
                     <p>Do you really want to remove Pack Name - {pack.name}?
                         You won't be able to revert this Pack Name.</p>
@@ -71,7 +72,8 @@ export const Pack: React.FC<PackPropsType> = ({pack}) => {
                     </ModalButtonsWrap>
                 </Modal>
             }
-            {modalType === 'Edit' &&
+            {
+                modalType === 'Edit' &&
                 <Modal title={'Edit Pack'} show={isShownModal} closeModal={closeModal}>
                     <label>New name</label>
                     <SuperInputText value={newPackName} onChangeText={setNewPackName}/>

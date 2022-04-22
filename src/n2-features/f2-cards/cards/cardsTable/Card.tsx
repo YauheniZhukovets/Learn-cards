@@ -6,10 +6,10 @@ import {AppStatusType} from '../../../../n1-main/m2-bll/b1-reducers/appReducer';
 import {Loading} from '../../../../n1-main/m1-ui/common/c0-Preloder/Loading';
 import {deleteCardTC, updateCardTC} from '../../../../n1-main/m2-bll/b1-reducers/cardReducer';
 import s from './Card.module.css';
-import Modal from '../../../../n1-main/m1-ui/Modal/Modal';
+import Modal from '../../../../n1-main/m1-ui/modal/Modal';
 import SuperButton from '../../../../n1-main/m1-ui/common/c2-SuperButton/SuperButton';
-import ModalButtonsWrap from '../../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
-import SuperTextArea from '../../../../n1-main/m1-ui/SuperTextArea/SuperTextArea';
+import ModalButtonsWrap from '../../../../n1-main/m1-ui/modal/ModalButtonsWrap';
+import SuperTextArea from '../../../../n1-main/m1-ui/common/c13-SuperTextArea/SuperTextArea';
 import StarRating from './StarRating';
 
 export type CardPropsType = {
@@ -17,7 +17,6 @@ export type CardPropsType = {
 }
 
 export const Card: React.FC<CardPropsType> = ({card}) => {
-    /*const grate = card.grade*/
 
     const dispatch = useDispatch()
     const status = useSelector<AppStoreType, AppStatusType>(state => state.app.status)
@@ -43,20 +42,6 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
         closeModal()
     }
 
- /*   const gradeCard = (grate: number) => {
-        if (grate < 2) {
-            return '*'
-        } else if (grate < 3) {
-            return '**'
-        } else if (grate < 4) {
-            return '***'
-        } else if (grate < 5) {
-            return '****'
-        } else if (grate < 6) {
-            return  '*****'
-        }
-    }*/
-
     if (status === 'loading') {
         return <Loading/>
     }
@@ -67,7 +52,6 @@ export const Card: React.FC<CardPropsType> = ({card}) => {
             <div className={s.answer}>{card.answer.slice(0, 15)}</div>
             <div className={s.updated}>{card.updated.slice(0, 10)}</div>
             <StarRating numTotalStars={5} initialRating={card.grade}/>
-            {/*<div className={s.grade}>{gradeCard(grate)}</div>*/}
             <div className={s.buttons}>{myUserId === card.user_id &&
                 <>
                     <button className={s.btn} onClick={() => showModal('Delete')}>Delete</button>

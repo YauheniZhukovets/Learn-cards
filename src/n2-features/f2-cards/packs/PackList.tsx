@@ -20,8 +20,8 @@ import {Pagination} from '../../../n1-main/m1-ui/common/c12-Pagination/Paginatio
 import {PageSizeSelector} from '../../../n1-main/m1-ui/common/c11-PageSizeSelector/PageSizeSelector';
 import SuperInputText from '../../../n1-main/m1-ui/common/c1-SuperInputText/SuperInputText';
 import SuperCheckbox from '../../../n1-main/m1-ui/common/c3-SuperCheckbox/SuperCheckbox';
-import Modal from '../../../n1-main/m1-ui/Modal/Modal';
-import ModalButtonsWrap from '../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
+import Modal from '../../../n1-main/m1-ui/modal/Modal';
+import ModalButtonsWrap from '../../../n1-main/m1-ui/modal/ModalButtonsWrap';
 import {Sidebar} from '../../../n1-main/m1-ui/sidebar/Sidebar';
 
 export const PackList = () => {
@@ -106,9 +106,7 @@ export const PackList = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <Modal title={'Add new pack'} show={isModal} closeModal={closeModal}>
                 <label>Name pack</label>

@@ -27,7 +27,6 @@ export function Error404() {
                 </NavLink>
             </div>
             <img src={img404} alt="404"/>
-
         </div>
     )
 }

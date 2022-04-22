@@ -15,9 +15,9 @@ import {CardType} from '../../../n1-main/m3-dal/m1-API/cardsAPI';
 import {CardsTable} from './cardsTable/CardsTable';
 import {CardsSearch} from '../../../n1-main/m1-ui/common/c10-Search/CardsSearch';
 import style from '../../../n1-main/m1-ui/styles/CardsPage.module.css';
-import SuperTextArea from '../../../n1-main/m1-ui/SuperTextArea/SuperTextArea';
-import ModalButtonsWrap from '../../../n1-main/m1-ui/Modal/ModalButtonsWrap';
-import Modal from '../../../n1-main/m1-ui/Modal/Modal';
+import SuperTextArea from '../../../n1-main/m1-ui/common/c13-SuperTextArea/SuperTextArea';
+import ModalButtonsWrap from '../../../n1-main/m1-ui/modal/ModalButtonsWrap';
+import Modal from '../../../n1-main/m1-ui/modal/Modal';
 import {Pagination} from '../../../n1-main/m1-ui/common/c12-Pagination/Pagination';
 import {PageSizeSelector} from '../../../n1-main/m1-ui/common/c11-PageSizeSelector/PageSizeSelector';
 
@@ -48,7 +48,7 @@ export const CardsList = () => {
         if (packId) {
             dispatch(fetchCardsTC(packId))
         }
-    }, [dispatch, packId, cardQuestion, cardAnswer, cardsSort, cardsTotalCount, pageCount, page])
+    }, [dispatch, packId, cardQuestion, cardAnswer, cardsSort, pageCount, page])
 
 
     const onClickAddNewPackHandler = () => {

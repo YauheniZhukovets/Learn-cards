@@ -4,14 +4,13 @@ import {AppStoreType} from '../../../n1-main/m2-bll/store';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import {CardType} from '../../../n1-main/m3-dal/m1-API/cardsAPI';
 import SuperButton from '../../../n1-main/m1-ui/common/c2-SuperButton/SuperButton';
-import {fetchCardsTC, gradeAnswerTC} from '../../../n1-main/m2-bll/b1-reducers/cardReducer';
+import {fetchCardsTC, gradeAnswerTC, setPageCountAC} from '../../../n1-main/m2-bll/b1-reducers/cardReducer';
 import {AppStatusType} from '../../../n1-main/m2-bll/b1-reducers/appReducer';
 import {PATH} from '../../../n1-main/m1-ui/routes/RoutesRoot';
 import SuperRadio from '../../../n1-main/m1-ui/common/c6-SuperRadio/SuperRadio';
 import {Header} from '../../../n1-main/m1-ui/heder/Header';
 import {Loading} from '../../../n1-main/m1-ui/common/c0-Preloder/Loading';
 import s from './Learn.module.css'
-
 
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
 
@@ -30,16 +29,14 @@ const getCard = (cards: CardType[]) => {
 }
 
 export const Learn = () => {
-    const {packId, packName} = useParams<string>();
+    const {packId, packName, cardsTotalCount} = useParams<string>();
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const status = useSelector<AppStoreType, AppStatusType>(state => state.app.status)
     const isLoggedIn = useSelector<AppStoreType, boolean>(state => state.login.isLoggedIn)
     const cards = useSelector<AppStoreType, CardType []>((store) => store.cards.cards);
-    /*const cardsTotalCount = useSelector<AppStoreType, number>(state => state.cards.cardsTotalCount)*/
 
-    const [first, setFirst] = useState<boolean>(true);
     const [isChecked, setIsChecked] = useState<boolean>(false);
     const [rating, setRating] = useState<string>('')
     const [card, setCard] = useState<CardType>({
@@ -55,17 +52,17 @@ export const Learn = () => {
     });
 
     useEffect(() => {
-        if (first) {
-            packId && dispatch(fetchCardsTC(packId))
-            setFirst(false)
+        if (packId && cardsTotalCount) {
+            dispatch(fetchCardsTC(packId, +cardsTotalCount))
         }
+        return () => {
+            dispatch(setPageCountAC(10))
+        }
+    }, [packId, cardsTotalCount])
+
+    useEffect(() => {
         if (cards.length > 0) setCard(getCard(cards));
-
-    }, [cards, first, dispatch, packId, fetchCardsTC]);
-
-    /*useEffect(() => {
-        dispatch(setPageCountAC(cardsTotalCount))
-    }, [cardsTotalCount, dispatch])*/
+    }, [cards, dispatch]);
 
     const onNext = () => {
         if (rating) {
@@ -103,9 +100,7 @@ export const Learn = () => {
                                                     value={rating}
                                                     onChangeOption={setRating}
                                         />
-
                                     </div>
-
                                 </>
                             )}
                     </div>
